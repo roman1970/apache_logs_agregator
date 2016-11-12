@@ -2,7 +2,9 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use dektrium\user\models\User as BaseUser;
+
+class User extends BaseUser
 {
     public $id;
     public $username;
@@ -10,22 +12,16 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    const ROLE_USER = 1;
+    const ROLE_MODER = 5;
+    const ROLE_ADMIN = 10;
+
+    private static $users;
+
+    public function register()
+    {
+
+    }
 
 
     /**
@@ -33,27 +29,13 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return new static(static::find()->where(['id' => $id])->asArray()->one());
     }
 
     /**
      * Finds user by username
      *
-     * @param string $username
+     * @param  string      $username
      * @return static|null
      */
     public static function findByUsername($username)
@@ -67,9 +49,15 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
         return null;
     }
 
+    public function rules(){
+        ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_MODER, self::ROLE_ADMIN]];
+    }
+
     /**
      * @inheritdoc
+     *
      */
+
     public function getId()
     {
         return $this->id;
@@ -94,11 +82,21 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     /**
      * Validates password
      *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @param  string  $password password to validate
+     * @return boolean if password provided is valid for current user
      */
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN]))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
