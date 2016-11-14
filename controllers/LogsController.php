@@ -106,7 +106,7 @@ class LogsController extends Controller
     
     function actionApi(){
         //return 'gg';
-        if(Yii::$app->getRequest()->getQueryParam('key') == 'e4') {
+        if(Yii::$app->getRequest()->getQueryParam('key') == Yii::$app->params['api_key']) {
             if (Yii::$app->getRequest()->getQueryParam('limit')) {
                 $logs = ApacheLog::find()
                     ->orderBy('id DESC')
@@ -175,7 +175,7 @@ class LogsController extends Controller
                 Чтобы получить последние 50 логов, нужно ввести такую строку <br>
                 <pre>'.Url::home(true).'logs/api/?limit=50&key=e4</pre>
                 Чтобы получить логи с фильтром по ip, сформируйте такой запрос <br>
-                <pre>'.Url::home(true).'logs/api/?ip=127&key=e4</pre>';
+                <pre>'.Url::home(true).'logs/api/?ip=127&key='.Yii::$app->params['api_key'].'</pre>';
     }
 
 }

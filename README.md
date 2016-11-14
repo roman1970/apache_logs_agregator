@@ -17,28 +17,26 @@ $ composer install
 $ chmod 777 web/assets
 $ chmod 777 runtime
 
-# создаём базу данных и вносим её параметры в файл настроек config/bd, который также нужно создать
-# содержимое файла
+# создаём базу данных, например
 
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=хост_сервера_bd;dbname=имя_созданной_bd',
-    'username' => 'пользователь_bd',
-    'password' => 'пароль_bd',
-    'charset' => 'utf8',
-];
+$ mysql -u root -p
+mysql> CREATE DATABASE test_db;
 
-# создать файл config/params, где будут прописаны пути до логов
-# содержимое файла как пример - значения вы должны вставить свои
+
+# создаём файл config/params, где будут прописаны пути до логов и другие параметры
+# содержимое файла как пример - значения вы должны вставить свои - без них приложение работать не будет
 
 
 return [
-    'log_files' =>  '/var/log/nginx/access.log',
+    'log_files' =>  '/var/log/apache2/access.log',
     'email_host' => '********',
     'cookieValidationKey' => '***********************',
     'mail_username' => '******',
     'mail_password' => '*******',
-    'api_key' => '********'
+    'api_key' => '********',
+    'db_name' => '******',
+    'db_username' => '****',
+    'db_password' => '********'
   
 ];
 
