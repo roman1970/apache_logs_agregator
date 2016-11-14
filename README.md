@@ -1,6 +1,6 @@
-<h3><a href="https://github.com/roman1970/apache_logs_agregator">Apache_logs_agregator</a></h3>
+<h3><a href="https://github.com/roman1970/apache_logs_agregator">Apache_logs_aggregator</a></h3>
 
-<p>Инструкция по установке и эксплуатации:</p>
+<p>Инструкция по установке (для тестирования и разработки):</p>
 
 Установить Composer с  getcomposer.org , если не установлен.
 
@@ -43,3 +43,4 @@ $ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
 
 </pre>
 
+DocumentRoot вашего веб-сервера должен смотреть в /web директорию приложения
