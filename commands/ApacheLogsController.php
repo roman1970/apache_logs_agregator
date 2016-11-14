@@ -2,6 +2,7 @@
 namespace app\commands;
 
 use app\models\ApacheLog;
+use Yii;
 use yii\console\Controller;
 
 class ApacheLogsController extends Controller
@@ -17,12 +18,13 @@ class ApacheLogsController extends Controller
 
 
     /**
-     *
+     * Экшн для запуска по крону для сбора логов базу 
      * @return string
      */
     public function actionLogsInBd(){
 
-        $content = file('/var/log/apache2/access.log');
+
+        $content = file(Yii::$app->params['log_files']['nginx']);
 
         foreach ($content as $rec){
 
@@ -31,15 +33,24 @@ class ApacheLogsController extends Controller
                 ->select('MAX(id)')
                 ->scalar();
 
+            $ip = '';
+            
+            $ip_succ = preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $rec, $ips_arr);
+
+            if($ip_succ) $ip = $ips_arr[0];
+            else return('fault0');
+
+            //var_dump($ips_arr); exit;
+
             //в логах - служебная информация в квадратных скобках
             //дата - первая, потому используем нежадный квантификатор
-            $suc1 = preg_match('/\[(.+?)\]/',$rec, $m);
+            $suc1 = preg_match('/\[(.+?)\]/', $rec, $m);
 
-            if($suc1)$exp = explode('/', $m[1]);
+            if($suc1) $exp = explode('/', $m[1]);
             else return('fault1');
 
-            //получаем метку времени access_log
-            $time = mktime(explode(':',$exp[2])[1], explode(':',$exp[2])[2], explode(':', explode(' ', $exp[2])[0])[3], $exp[1] == 'Nov' ? 9 : 1, $exp[0], explode(':',$exp[2])[0]);
+            //получаем метку времени access_log, на месяц стоит заглушка
+            $time = mktime(explode(':',$exp[2])[1], explode(':',$exp[2])[2], explode(':', explode(' ', $exp[2])[0])[3], $exp[1] == 'Nov' ? 11 : 1, $exp[0], explode(':',$exp[2])[0]);
 
             //получаем тело лога
             $suc2 = preg_match('/\](.+)/',$rec, $bod);
@@ -53,6 +64,7 @@ class ApacheLogsController extends Controller
                     $log = new ApacheLog();
                     $log->time = $time;
                     $log->body = $body;
+                    $log->ip = $ip;
                     $log->save();
                 }
             }
@@ -61,6 +73,7 @@ class ApacheLogsController extends Controller
                 $log = new ApacheLog();
                 $log->time = $time;
                 $log->body = $body;
+                $log->ip = $ip;
                 $log->save();
             }
 

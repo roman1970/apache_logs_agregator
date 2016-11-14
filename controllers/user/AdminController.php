@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers\user;
 
-use app\modules\user\models\User;
+use app\models\User;
 use dektrium\user\controllers\AdminController as BaseAdminController;
 use dektrium\user\models\UserSearch;
 use yii\web\Controller;

@@ -49,6 +49,19 @@ class User extends BaseUser
         return null;
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username'          => \Yii::t('user', 'Имя'),
+            'email'             => \Yii::t('user', 'Email'),
+            'registration_ip'   => \Yii::t('user', 'ip'),
+            'unconfirmed_email' => \Yii::t('user', 'Новый email'),
+            'password'          => \Yii::t('user', 'Пароль'),
+            'created_at'        => \Yii::t('user', 'Время регистрации'),
+            'confirmed_at'      => \Yii::t('user', 'Время подтверждения'),
+        ];
+    }
+
     public function rules(){
         ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_MODER, self::ROLE_ADMIN]];
     }

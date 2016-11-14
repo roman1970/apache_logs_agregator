@@ -25,11 +25,12 @@ class SecurityController extends BaseSecurityController
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->login() && (Yii::$app->user->identity->getId() == 1
         || Yii::$app->user->identity->getId() == 4)) {
-            return $this->redirect(\Yii::$app->urlManager->createUrl("admin/index"));
+            //Переопределить урл на админку, если будет использоваться
+            return $this->redirect(\Yii::$app->urlManager->createUrl("logs/menu"));
         }
 
         elseif ($model->load(Yii::$app->getRequest()->post()) && $model->login()){
-            return $this->redirect(\Yii::$app->urlManager->createUrl("admin/usermod"));
+            return $this->redirect(\Yii::$app->urlManager->createUrl("logs/menu"));
         }
 
         elseif(Yii::$app->getRequest()->post()) return 'l';

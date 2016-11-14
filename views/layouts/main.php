@@ -18,59 +18,40 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
     <?php $this->head() ?>
 </head>
+<style>
+    .btn-success {
+        color: rgb(255, 255, 255);
+        background-color: rgba(105, 102, 105, 0.98);
+        border-color: rgb(125, 115, 125);
+    }
+    .btn-success:hover {
+        color: rgb(255, 255, 255);
+        background-color: rgb(51, 51, 51);
+        border-color: rgb(51, 51, 51);
+    }
+</style>
 <body>
 <?php $this->beginBody() ?>
 
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Apache_access_logs_aggregator',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    /*echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => array_filter([
-            ['label' => 'Home', 'url' => ['/main/default/index']],
-            ['label' => 'Contact', 'url' => ['/contact/default/index']],
-            Yii::$app->user->isGuest ?
-                ['label' => 'Sign Up', 'url' => ['/user/default/signup']] :
-                false,
-            Yii::$app->user->isGuest ?
-                ['label' => 'Login', 'url' => ['/user/default/login']] :
-                ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/user/default/logout'],
-                    'linkOptions' => ['data-method' => 'post']],
-        ]),
-    ]);
-    */
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -97,7 +78,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; ApaCHE_access_logs_aggRegatOr <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

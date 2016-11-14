@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Вход'), ['class' => 'btn btn-success btn-block']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Зарегистрироваться'), ['class' => 'btn btn-success btn-block']) ?>
 
                 <?php ActiveForm::end(); ?>
             </div>

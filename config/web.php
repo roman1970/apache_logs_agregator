@@ -14,14 +14,21 @@ $config = [
         ],
         'user' => [
             'class' => 'dektrium\user\Module',
-            /*'controllerMap' => [
+            'controllerMap' => [
                 'admin' => [
-                    'class'  => 'app\modules\user\controllers\AdminController',
+                    'class'  => 'app\controllers\user\AdminController',
                     //'layout' => 'app\views',
                 ],
-                'security' => 'app\modules\user\controllers\SecurityController'
+                'security' => 'app\controllers\user\SecurityController'
             ],
-            */
+            'mailer' => [
+                'sender'                => 'no-reply@myhost.com', // or ['no-reply@myhost.com' => 'Sender name']
+                'welcomeSubject'        => 'Welcome subject',
+                'confirmationSubject'   => 'Confirmation subject',
+                'reconfirmationSubject' => 'Email change subject',
+                'recoverySubject'       => 'Recovery subject',
+                ],
+
             'enableUnconfirmedLogin' => true,
             'confirmWithin' => 21600,
             'cost' => 12,
@@ -122,6 +129,7 @@ $config = [
                 '<_m:[\w\-]+>/<_c:[\w\-]+>' => '<_m>/<_c>/index',
             ],
         ]
+        */
 
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
@@ -139,7 +147,7 @@ $config = [
             ],
 
         ],
-        */
+
     ],
 
     'params' => $params,
