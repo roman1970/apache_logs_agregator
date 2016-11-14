@@ -115,7 +115,7 @@ class LogsController extends Controller
                 if ($logs) {
                     $arr = null;
                     foreach ($logs as $log) {
-                        $arr[$log->id]['id'] = $log->id;
+                        $arr[$log->id]['ip'] = $log->ip;
                         $arr[$log->id]['time'] = $log->time;
                         $arr[$log->id]['body'] = $log->body;
                     }
@@ -132,7 +132,7 @@ class LogsController extends Controller
                 if ($logs){
                     $arr = null;
                     foreach ($logs as $log){
-                        $arr[$log->id]['ip'] = $log->id;
+                        $arr[$log->id]['ip'] = $log->ip;
                         $arr[$log->id]['time'] = $log->time;
                         $arr[$log->id]['body'] = $log->body;
                     }
@@ -170,10 +170,10 @@ class LogsController extends Controller
      */
     function actionApiPermission(){
         return 'Чтобы получать данные введите в адресной строке браузера <br>
-                <pre>'.Url::home(true).'logs/api/?from=2016-11-13&to=2016-11-14&key=e4</pre>'.',
+                <pre>'.Url::home(true).'logs/api/?from=2016-11-13&to=2016-11-14&key='.Yii::$app->params['api_key'].'</pre>'.',
                 где параметр from - начальная дата желаемого интервала, to - конечная, key - ваш ключ<br>
                 Чтобы получить последние 50 логов, нужно ввести такую строку <br>
-                <pre>'.Url::home(true).'logs/api/?limit=50&key=e4</pre>
+                <pre>'.Url::home(true).'logs/api/?limit=50&key='.Yii::$app->params['api_key'].'</pre>
                 Чтобы получить логи с фильтром по ip, сформируйте такой запрос <br>
                 <pre>'.Url::home(true).'logs/api/?ip=127&key='.Yii::$app->params['api_key'].'</pre>';
     }
