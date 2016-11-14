@@ -1,20 +1,45 @@
-Apache_logs_agregator
+<h3><a href="https://github.com/roman1970/apache_logs_agregator">Apache_logs_agregator</a></h3>
 
-Инструкция по установке и эксплуатации:
+<p>Инструкция по установке и эксплуатации:</p>
 
 Установить Composer с  getcomposer.org , если не установлен.
 
+В той директории, где хотите развернуть приложение выполните следующие команды:
 
+<pre>
+# клонируем репозиторий
+$ git clone https://github.com/roman1970/apache_logs_agregator .
 
-For Apache:
+# затягиваем vendor фреймворка
+$ composer install
 
-<VirtualHost *:80>
-    ServerName www.yii2-start.domain # You need to change it to your own domain  
-    ServerAlias yii2-start.domain # You need to change it to your own domain  
-    DocumentRoot /my/path/to/yii2-start # You need to change it to your own path  
-    <Directory /my/path/to/yii2-start> # You need to change it to your own path  
-        AllowOverride All  
-    </Directory>  
-</VirtualHost>
-Use the URL http://yii2-start.domain to access application frontend.
-Use the URL http://yii2-start.domain/backend/ to access application backend.
+# даём права фреймворку писать в определённые директории
+$ chmod 777 web/assets
+$ chmod 777 runtime
+
+# создаём базу данных и вносим её параметры в файл настроек config/bd, который также нужно создать
+# содержимое файла
+return [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=хост_сервера_bd;dbname=имя_созданной_bd',
+    'username' => 'пользователь_bd',
+    'password' => 'пароль_bd',
+    'charset' => 'utf8',
+];
+
+# создать файл config/params, где будут прописаны пути до логов
+# содержимое файла как пример
+
+return [
+    'log_files' => [
+        'apache' => '/var/log/apache2/access.log',
+        //'nginx' => '/var/log/nginx/access.log'
+    ]
+];
+
+# затем нужно применить миграции
+$ php yii migrate
+$ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+
+</pre>
+
