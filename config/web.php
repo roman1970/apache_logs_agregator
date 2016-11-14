@@ -34,40 +34,12 @@ $config = [
             'cost' => 12,
             'admins' => ['roman']
         ],
-        /*
-        'rbac' => [
-            'class' => 'dektrium\rbac\RbacWebModule',
-            'controllerMap' => [
-                'assignment' => [
-                    'class' => 'dektrium\rbac\controllers\AssignmentController',
-                    'userClassName' => 'app\models\User',
-                ]
-            ]
-        ],
-        'weather' => [
-            'class' => 'app\modules\weather\Weather',
-
-        ],
-        'diary' => [
-            'class' => 'app\modules\diary\Diary',
-        ],
-        'khl' => [
-            'class' => 'app\modules\khl\Khl',
-            //'admins' => ['roman']
-        ],
-        'repertuar' => [
-            'class' => 'app\modules\repertuar\Repertuar',
-        ],
-        'currency' => [
-            'class' => 'app\modules\currency\Module',
-        ],
-        */
-
+       
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'Xu4Whj-Oq2yC2ANAE_iAWhYdr0w0K3Ei',
+            'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -86,7 +58,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => $params['email_host'],
+                'username' => $params['mail_username'],
+                'password' => $params['mail_password'],
+                'port' => '465',
+                //'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -142,6 +122,8 @@ $config = [
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '/retryConfirmEmail' => '/user/user/retry-confirm-email',
+                '/confirmEmail' => '/user/user/confirm-email',
 
 
             ],

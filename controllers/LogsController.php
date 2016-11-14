@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ApacheLog;
+use app\models\ApacheLogSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -53,12 +54,20 @@ class LogsController extends Controller
      * @return string
      */
     function actionShowLast(){
+
         $logs = ApacheLog::find()
             ->orderBy('id DESC')
             ->limit(10)
             ->all();
         
         return $this->renderPartial('logs', ['logs' => $logs]);
+        /* 
+        $searchModel = new ApacheLogSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->renderPartial('logs', ['logs' => $dataProvider, 'searchModel' => $searchModel]);
+        */
     }
 
     /**
@@ -121,11 +130,29 @@ class LogsController extends Controller
                     ->all();
                 
                 if ($logs){
-                    $arr = [];
+                    $arr = null;
                     foreach ($logs as $log){
-                        $arr[]['id'] = $log->id;
-                        $arr[]['time'] = $log->time;
-                        $arr[]['body'] = $log->body;
+                        $arr[$log->id]['ip'] = $log->id;
+                        $arr[$log->id]['time'] = $log->time;
+                        $arr[$log->id]['body'] = $log->body;
+                    }
+                    return json_encode($arr);
+                }
+
+                else return $this->renderPartial('json_error');
+            }
+            if (Yii::$app->getRequest()->getQueryParam('ip')) {
+                $logs = ApacheLog::find()
+                    ->where("ip LIKE '%" . Yii::$app->getRequest()->getQueryParam('ip')."%'")
+                    ->orderBy('id DESC')
+                    ->all();
+
+                if ($logs){
+                    $arr = null;
+                    foreach ($logs as $log){
+                        $arr[$log->id]['ip'] = $log->ip;
+                        $arr[$log->id]['time'] = $log->time;
+                        $arr[$log->id]['body'] = $log->body;
                     }
                     return json_encode($arr);
                 }
@@ -137,12 +164,18 @@ class LogsController extends Controller
         return $this->renderPartial('json_error');
     }
 
+    /**
+     * Возможности Api
+     * @return string
+     */
     function actionApiPermission(){
         return 'Чтобы получать данные введите в адресной строке браузера <br>
                 <pre>'.Url::home(true).'logs/api/?from=2016-11-13&to=2016-11-14&key=e4</pre>'.',
                 где параметр from - начальная дата желаемого интервала, to - конечная, key - ваш ключ<br>
                 Чтобы получить последние 50 логов, нужно ввести такую строку <br>
-                <pre>'.Url::home(true).'logs/api/?limit=50&key=e4</pre>';
+                <pre>'.Url::home(true).'logs/api/?limit=50&key=e4</pre>
+                Чтобы получить логи с фильтром по ip, сформируйте такой запрос <br>
+                <pre>'.Url::home(true).'logs/api/?ip=127&key=e4</pre>';
     }
 
 }

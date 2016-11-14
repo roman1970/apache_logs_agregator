@@ -24,7 +24,7 @@ class ApacheLogsController extends Controller
     public function actionLogsInBd(){
 
 
-        $content = file(Yii::$app->params['log_files']['nginx']);
+        $content = file(Yii::$app->params['log_file']);
 
         foreach ($content as $rec){
 

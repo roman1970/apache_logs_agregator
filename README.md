@@ -28,19 +28,34 @@ return [
 ];
 
 # создать файл config/params, где будут прописаны пути до логов
-# содержимое файла как пример
+# содержимое файла как пример - значения вы должны вставить свои
+
+<?php
+
+<?php
 
 return [
-    'log_files' => [
-        'apache' => '/var/log/apache2/access.log',
-        //'nginx' => '/var/log/nginx/access.log'
-    ]
+    'log_files' =>  '/var/log/nginx/access.log',
+    'email_host' => '********',
+    'cookieValidationKey' => '***********************',
+    'mail_username' => '******',
+    'mail_password' => '*******',
+    'api_key' => '********'
+  
 ];
 
 # затем нужно применить миграции
 $ php yii migrate
 $ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
 
+# Сбор логов можно организовать с помощью планировщика cron, например каждый час
+$ crontab -e 
+59 * * * * cd /путь/до/apache_logs_agregator && php yii apache-logs/logs-in-bd
+
 </pre>
 
 DocumentRoot вашего веб-сервера должен смотреть в /web директорию приложения
+
+Если возникли проблемы, обращайтесь r0man4ernyshev@gmail.com или Skype roman.4ernyshev
+
+
