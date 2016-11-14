@@ -19,6 +19,7 @@ $ chmod 777 runtime
 
 # создаём базу данных и вносим её параметры в файл настроек config/bd, который также нужно создать
 # содержимое файла
+
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=хост_сервера_bd;dbname=имя_созданной_bd',
@@ -30,9 +31,6 @@ return [
 # создать файл config/params, где будут прописаны пути до логов
 # содержимое файла как пример - значения вы должны вставить свои
 
-<?php
-
-<?php
 
 return [
     'log_files' =>  '/var/log/nginx/access.log',
