@@ -41,6 +41,7 @@
 
     <div id="menu">
         <button type="button" class="btn btn-success btn-lg btn-block" onclick="send('show-last')">Просмотреть последние логи</button>
+        <button type="button" class="btn btn-success btn-lg btn-block" onclick="send('show-not-local')">Просмотреть внешние запросы</button>
         <button type="button" class="btn btn-success btn-lg btn-block" onclick="send('show-date')">Просмотреть логи по дате</button>
         <button type="button" class="btn btn-success btn-lg btn-block" onclick="send('api-permission')">Доступ к API</button>
 
@@ -49,6 +50,6 @@
     <div id="show_menu">
         <button type="button" class="btn btn-success btn-lg btn-block" >Меню</button>
     </div>
-    <div id="summary" style="text-align: center"></div>
+    <div id="summary" style="text-align: left; overflow: auto"></div>
 
 </div>

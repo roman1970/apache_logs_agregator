@@ -57,11 +57,33 @@ class LogsController extends Controller
 
         $logs = ApacheLog::find()
             ->orderBy('id DESC')
-            ->limit(10)
+           // ->limit(10)
             ->all();
         
         return $this->renderPartial('logs', ['logs' => $logs]);
         /* 
+        $searchModel = new ApacheLogSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->renderPartial('logs', ['logs' => $dataProvider, 'searchModel' => $searchModel]);
+        */
+    }
+
+    /**
+     * Показать нелокальные
+     * @return string
+     */
+    function actionShowNotLocal(){
+
+        $logs = ApacheLog::find()
+            ->where("ip NOT IN('192.168.1.1', '127.0.0.1', '')")
+            ->orderBy('id DESC')
+            // ->limit(10)
+            ->all();
+
+        return $this->renderPartial('logs', ['logs' => $logs]);
+        /*
         $searchModel = new ApacheLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
