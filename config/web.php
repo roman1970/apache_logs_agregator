@@ -29,7 +29,7 @@ $config = [
                 'recoverySubject'       => 'Recovery subject',
                 ],
 
-            'enableUnconfirmedLogin' => true,
+            'enableUnconfirmedLogin' => false,
             'confirmWithin' => 21600,
             'cost' => 12,
             'admins' => ['roman']

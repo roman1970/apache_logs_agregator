@@ -15,22 +15,3 @@
 <?php endforeach; ?>
     </tbody>
 </table>
-
-<?php /*
-
-use yii\grid\GridView;
-
-?>
-
-<div class="col-sm-10 col-md-12 main">
-    <h1 class="page-header">Логи</h1>
-    <?php  //var_dump($articles); exit; ?>
-    <?= GridView::widget([
-        'dataProvider' => $logs,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'ip',
-            'body',
-            'time',
-        ],
-    ]); ?>
