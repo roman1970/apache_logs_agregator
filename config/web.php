@@ -39,7 +39,8 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => $params['cookieValidationKey'],
+           'cookieValidationKey' => $params['cookieValidationKey'],
+            'enableCsrfValidation' => false,
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -86,6 +87,8 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'db_plis' => require(__DIR__ . '/db_plis.php'),
+        'db_postgres' => require(__DIR__ . '/db_postgres.php'),
 
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

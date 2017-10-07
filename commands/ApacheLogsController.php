@@ -40,6 +40,8 @@ class ApacheLogsController extends Controller
             if($ip_succ) $ip = $ips_arr[0];
             else return('fault0');
 
+            if($ip == '192.168.1.1' || $ip == '127.0.0.1' ) continue;
+
             //var_dump($ips_arr); exit;
 
             //в логах - служебная информация в квадратных скобках
@@ -49,8 +51,53 @@ class ApacheLogsController extends Controller
             if($suc1) $exp = explode('/', $m[1]);
             else return('fault1');
 
+            $month = 0;
+            //exit;
+            
+            switch ($exp[1]) {
+                case 'Jan' :
+                    $month = 1;
+                    break;
+                case 'Feb' :
+                    $month = 2;
+                    break;
+                case 'Mar' :
+                    $month = 3;
+                    break;
+                case 'Apr' :
+                    $month = 4;
+                    break;
+                case 'May' :
+                    $month = 5;
+                    break;
+                case 'Jun' :
+                    $month = 6;
+                    break;
+                case 'Jul' :
+                    $month = 7;
+                    break;
+                case 'Aug' :
+                    $month = 8;
+                    break;
+                case 'Sep' :
+                    $month = 9;
+                    break;
+                case 'Oct' :
+                    $month = 10;
+                    break;
+                case 'Nov' :
+                    $month = 11;
+                    break;
+                case 'Dec' :
+                    $month = 12;
+                    break;
+                default :
+                    $month = 0;
+            }
+            
+
             //получаем метку времени access_log, на месяц стоит заглушка
-            $time = mktime(explode(':',$exp[2])[1], explode(':',$exp[2])[2], explode(':', explode(' ', $exp[2])[0])[3], $exp[1] == 'Nov' ? 11 : 1, $exp[0], explode(':',$exp[2])[0]);
+            $time = mktime(explode(':',$exp[2])[1], explode(':',$exp[2])[2], explode(':', explode(' ', $exp[2])[0])[3], $month, $exp[0], explode(':',$exp[2])[0]);
 
             //получаем тело лога
             $suc2 = preg_match('/\](.+)/',$rec, $bod);
@@ -76,6 +123,7 @@ class ApacheLogsController extends Controller
                 $log->ip = $ip;
                 $log->save();
             }
+            
 
         }
 
